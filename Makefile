@@ -11,6 +11,10 @@ LOG_DIST = log_distribuido.txt
 LOG_CONC = log_concorrente.txt
 
 .PHONY: all clean validate \
+        exp-A \
+        perf-ipc-dist-seq \
+        perf-ipc-dist-atomic perf-ipc-dist-critical \
+        perf-ipc-dist-lock perf-ipc-dist-padded \
         perf-ipc-dist perf-ipc-conc \
         perf-cache-atomic perf-cache-padded \
         valgrind-atomic valgrind-padded \
@@ -41,8 +45,7 @@ analyzer_par_atomic_padded: analyzer_par_atomic_padded.c hash_table_padded.c has
 # Validação (Seção 7 do enunciado)
 # -------------------------------------------------------
 
-validate: analyzer_seq
-	./analyzer_seq $(LOG_DIST)
+validate: 
 	sort results.csv > sorted_res.csv
 	sort gabarito_distribuido.csv > sorted_gab.csv
 	diff -s sorted_res.csv sorted_gab.csv
@@ -52,26 +55,79 @@ validate: analyzer_seq
 # Mede IPC (instructions + cycles) no log distribuído
 # -------------------------------------------------------
 
-perf-ipc-dist: analyzer_par_atomic
-	@echo "=== 1 thread ==="
+exp-A: perf-ipc-dist-seq perf-ipc-dist-atomic perf-ipc-dist-critical perf-ipc-dist-lock perf-ipc-dist-padded
+
+perf-ipc-dist-seq: analyzer_seq
+	@echo "=== seq ==="
+	perf stat -e instructions,cycles \
+		./analyzer_seq $(LOG_DIST)
+
+perf-ipc-dist-atomic: analyzer_par_atomic
+	@echo "=== atomic — 1 thread ==="
 	OMP_NUM_THREADS=1 perf stat -e instructions,cycles \
 		./analyzer_par_atomic $(LOG_DIST) 1
-	@echo "=== 2 threads ==="
+	@echo "=== atomic — 2 threads ==="
 	OMP_NUM_THREADS=2 perf stat -e instructions,cycles \
 		./analyzer_par_atomic $(LOG_DIST) 2
-	@echo "=== 4 threads ==="
+	@echo "=== atomic — 4 threads ==="
 	OMP_NUM_THREADS=4 perf stat -e instructions,cycles \
 		./analyzer_par_atomic $(LOG_DIST) 4
-	@echo "=== 8 threads ==="
+	@echo "=== atomic — 8 threads ==="
 	OMP_NUM_THREADS=8 perf stat -e instructions,cycles \
 		./analyzer_par_atomic $(LOG_DIST) 8
+
+perf-ipc-dist-critical: analyzer_par_critical
+	@echo "=== critical — 1 thread ==="
+	OMP_NUM_THREADS=1 perf stat -e instructions,cycles \
+		./analyzer_par_critical $(LOG_DIST) 1
+	@echo "=== critical — 2 threads ==="
+	OMP_NUM_THREADS=2 perf stat -e instructions,cycles \
+		./analyzer_par_critical $(LOG_DIST) 2
+	@echo "=== critical — 4 threads ==="
+	OMP_NUM_THREADS=4 perf stat -e instructions,cycles \
+		./analyzer_par_critical $(LOG_DIST) 4
+	@echo "=== critical — 8 threads ==="
+	OMP_NUM_THREADS=8 perf stat -e instructions,cycles \
+		./analyzer_par_critical $(LOG_DIST) 8
+
+perf-ipc-dist-lock: analyzer_par_lock
+	@echo "=== lock — 1 thread ==="
+	OMP_NUM_THREADS=1 perf stat -e instructions,cycles \
+		./analyzer_par_lock $(LOG_DIST) 1
+	@echo "=== lock — 2 threads ==="
+	OMP_NUM_THREADS=2 perf stat -e instructions,cycles \
+		./analyzer_par_lock $(LOG_DIST) 2
+	@echo "=== lock — 4 threads ==="
+	OMP_NUM_THREADS=4 perf stat -e instructions,cycles \
+		./analyzer_par_lock $(LOG_DIST) 4
+	@echo "=== lock — 8 threads ==="
+	OMP_NUM_THREADS=8 perf stat -e instructions,cycles \
+		./analyzer_par_lock $(LOG_DIST) 8
+
+perf-ipc-dist-padded: analyzer_par_atomic_padded
+	@echo "=== atomic_padded — 1 thread ==="
+	OMP_NUM_THREADS=1 perf stat -e instructions,cycles \
+		./analyzer_par_atomic_padded $(LOG_DIST) 1
+	@echo "=== atomic_padded — 2 threads ==="
+	OMP_NUM_THREADS=2 perf stat -e instructions,cycles \
+		./analyzer_par_atomic_padded $(LOG_DIST) 2
+	@echo "=== atomic_padded — 4 threads ==="
+	OMP_NUM_THREADS=4 perf stat -e instructions,cycles \
+		./analyzer_par_atomic_padded $(LOG_DIST) 4
+	@echo "=== atomic_padded — 8 threads ==="
+	OMP_NUM_THREADS=8 perf stat -e instructions,cycles \
+		./analyzer_par_atomic_padded $(LOG_DIST) 8
 
 # -------------------------------------------------------
 # Experimento B — Contenção com perf (Seção 8.5)
 # Mede IPC no log concorrente (hotspots)
 # -------------------------------------------------------
+exp-B-ipc: perf-ipc-conc
 
 perf-ipc-conc: analyzer_par_atomic analyzer_par_critical analyzer_par_lock
+	@echo "=== seq ==="
+	perf stat -e instructions,cycles \
+		./analyzer_seq $(LOG_CONC)
 	@echo "=== atomic ==="
 	perf stat -e instructions,cycles \
 		./analyzer_par_atomic $(LOG_CONC) 8
@@ -85,6 +141,7 @@ perf-ipc-conc: analyzer_par_atomic analyzer_par_critical analyzer_par_lock
 # -------------------------------------------------------
 # Experimento B — System time (Seção 8.5)
 # -------------------------------------------------------
+exp-B-time: time-critical time-atomic time-lock
 
 time-critical: analyzer_par_critical
 	/usr/bin/time -v ./analyzer_par_critical $(LOG_CONC) 8
@@ -99,6 +156,8 @@ time-lock: analyzer_par_lock
 # Experimento C — False Sharing com perf (Seção 8.6)
 # Compara cache-references e cache-misses: atomic vs padded
 # -------------------------------------------------------
+
+exp-C: perf-cache-atomic perf-cache-padded valgrind-atomic valgrind-padded
 
 perf-cache-atomic: analyzer_par_atomic
 	perf stat -e cache-references,cache-misses \

@@ -1,0 +1,298 @@
+cmd: ./analyzer_par_atomic_padded log_concorrente.txt 8
+events: Ir
+fl=???
+fn=(below main)
+0 81
+fn=???
+0 3042330504
+fn=GOMP_parallel
+0 38
+fn=_Exit
+0 5
+fn=_IO_default_finish
+0 165
+fn=_IO_default_uflow
+0 5080874
+fn=_IO_default_xsputn
+0 1218
+fn=_IO_do_write
+0 8298
+fn=_IO_doallocbuf
+0 253
+fn=_IO_enable_locks
+0 38
+fn=_IO_file_close
+0 22
+fn=_IO_file_close_it
+0 559
+fn=_IO_file_doallocate
+0 517
+fn=_IO_file_finish
+0 132
+fn=_IO_file_fopen
+0 673
+fn=_IO_file_open
+0 352
+fn=_IO_file_overflow
+0 32594
+fn=_IO_file_read
+0 923828
+fn=_IO_file_seek
+0 18
+fn=_IO_file_seekoff
+0 430001436
+fn=_IO_file_stat
+0 24
+fn=_IO_file_underflow
+0 12700819
+fn=_IO_file_write
+0 27144
+fn=_IO_file_xsputn
+0 1740
+fn=_IO_flush_all
+0 179
+fn=_IO_free_backup_area
+0 126
+fn=_IO_getline
+0 20200016
+fn=_IO_getline_info
+0 645175290
+fn=_IO_link_in
+0 1206
+fn=_IO_setb
+0 649
+fn=_IO_switch_to_get_mode
+0 5542776
+fn=_IO_un_link
+0 66
+fn=_IO_unsave_markers
+0 88
+fn=__call_tls_dtors
+0 11
+fn=__close_nocancel
+0 60
+fn=__ctype_init
+0 128
+fn=__cxa_atexit
+0 2
+fn=__cxa_finalize
+0 168
+fn=__default_morecore
+0 565
+fn=__isoc23_strtoul
+0 10
+fn=__libc_early_init
+0 51
+fn=__libc_sigaction
+0 50
+fn=__memcpy_chk
+0 23
+fn=__memmove_chk
+0 23
+fn=__mempcpy_chk
+0 23
+fn=__memset_chk
+0 24
+fn=__open_nocancel
+0 23
+fn=__overflow
+0 10875
+fn=__read_nocancel
+0 5
+fn=__sched_cpucount
+0 64
+fn=__sigsetjmp
+0 144
+fn=__tunable_get_val
+0 815
+fn=__uflow
+0 7390368
+fn=_dl_allocate_tls
+0 56
+fn=_dl_allocate_tls_init
+0 1258
+fn=_dl_audit_preinit
+0 4
+fn=_dl_catch_exception
+0 195
+fn=_dl_debug_state
+0 2
+fn=_setjmp
+0 16
+fn=bcmp
+0 26
+fn=brk
+0 554
+fn=calloc
+0 813
+fn=clone
+0 175
+fn=exit
+0 5
+fn=fclose
+0 822
+fn=fgets
+0 726400562
+fn=fopen
+0 22
+fn=fprintf
+0 2400000
+fn=free
+0 12401603
+fn=fseek
+0 389
+fn=fstat
+0 60
+fn=ftell
+0 500000443
+fn=get_nprocs_conf
+0 7
+fn=getenv
+0 2904
+fn=getpagesize
+0 40
+fn=getrlimit
+0 9
+fn=ht_create
+0 23
+fn=ht_destroy
+0 1726737
+fn=ht_get
+0 2428043536
+fn=ht_put
+0 27540697
+fn=ht_save_results
+0 1887669
+fn=index
+0 21
+fn=lseek
+0 45
+fn=main
+0 1300076
+fn=main._omp_fn.0
+0 370000491
+fn=malloc
+0 8601524
+fn=memalign
+0 3
+fn=memchr
+0 24
+fn=memcpy
+0 46
+fn=memmove
+0 23
+fn=mempcpy
+0 23
+fn=memrchr
+0 27
+fn=memset
+0 24
+fn=mmap
+0 425
+fn=mprotect
+0 70
+fn=munmap
+0 30
+fn=omp_get_num_threads
+0 64
+fn=omp_get_thread_num
+0 32
+fn=omp_set_num_threads
+0 14
+fn=open
+0 299
+fn=pthread_attr_init
+0 13
+fn=pthread_create
+0 2047
+fn=pthread_getaffinity_np
+0 19
+fn=pthread_key_create
+0 43
+fn=pthread_key_delete
+0 30
+fn=pthread_mutex_lock
+0 312
+fn=pthread_mutex_unlock
+0 16
+fn=pthread_self
+0 2
+fn=pthread_setspecific
+0 66
+fn=read
+0 2078613
+fn=realloc
+0 24
+fn=rindex
+0 27
+fn=sbrk
+0 1670
+fn=secure_getenv
+0 10
+fn=snprintf
+0 161
+fn=stpcpy
+0 19
+fn=stpncpy
+0 21
+fn=strcasecmp
+0 23
+fn=strcasecmp_l
+0 23
+fn=strcat
+0 19
+fn=strchrnul
+0 27
+fn=strcmp
+0 42
+fn=strcpy
+0 19
+fn=strcspn
+0 12
+fn=strlen
+0 54
+fn=strncasecmp
+0 23
+fn=strncasecmp_l
+0 23
+fn=strncmp
+0 46
+fn=strncpy
+0 42
+fn=strnlen
+0 54
+fn=strpbrk
+0 6
+fn=strspn
+0 6
+fn=strstr
+0 6
+fn=strtol
+0 5
+fn=sysconf
+0 44
+fn=wcpncpy
+0 20
+fn=wcscat
+0 20
+fn=wcschr
+0 54
+fn=wcscmp
+0 27
+fn=wcscpy
+0 18
+fn=wcslen
+0 21
+fn=wcsncpy
+0 20
+fn=wcsnlen
+0 21
+fn=wmemchr
+0 48
+fn=wmemcmp
+0 26
+fn=wmemset
+0 18
+fn=write
+0 6786
+summary: 8251837694
