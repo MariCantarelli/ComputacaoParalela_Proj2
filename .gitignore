@@ -53,3 +53,8 @@ dkms.conf
 
 # debug information files
 *.dwo
+
+# Large data/log files
+cdn_data_logs.zip
+log_concorrente.txt
+log_distribuido.txt
